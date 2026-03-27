@@ -491,4 +491,4 @@ def debug_users():
 if __name__ == '__main__':
     print("🎬 CineMatch API → http://localhost:5000")
     print(f"   TMDB images: {'enabled' if TMDB_KEY else 'disabled (set TMDB_API_KEY env var)'}")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
