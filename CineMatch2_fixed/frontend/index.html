@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineMatch — Discover Cinema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="grain-overlay"></div>
+
+<!-- ══ TOP NAVBAR ══ -->
+<header class="topnav">
+  <div class="nav-brand">
+    <span class="brand-icon">◈</span>
+    <span class="brand-name">CineMatch</span>
+  </div>
+  <nav class="nav-links">
+    <a class="nav-link active" data-view="discover">Discover</a>
+    <a class="nav-link" data-view="search">Search</a>
+    <a class="nav-link" data-view="mood">By Mood</a>
+    <a class="nav-link" data-view="director">Director's Lens</a>
+    <a class="nav-link" data-view="watchlist">Watchlist</a>
+    <a class="nav-link" data-view="ai">AI Adviser</a>
+  </nav>
+  <div class="nav-user">
+    <div class="user-badge" id="userBadge">
+      <span class="user-avatar" id="userAvatar">G</span>
+      <span class="user-name" id="userName">Guest</span>
+    </div>
+    <button class="btn-signout" id="signoutBtn">Sign Out</button>
+  </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <!-- DISCOVER -->
+  <section class="view active" id="view-discover">
+    <div class="view-hero">
+      <div class="hero-text">
+        <p class="label">CURATED FOR YOU</p>
+        <h1 class="hero-title">Your Cinema <em>Awaits</em></h1>
+      </div>
+      <div class="hero-filters">
+        <select class="chip-select" id="discoverSort">
+          <option value="rating">Top Rated</option>
+          <option value="year">Newest</option>
+          <option value="votes">Most Popular</option>
+        </select>
+        <select class="chip-select" id="discoverGenre"><option value="">All Genres</option></select>
+        <select class="chip-select" id="discoverEra"><option value="">All Eras</option></select>
+      </div>
+    </div>
+    <div class="movie-grid" id="discoverGrid"></div>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="view" id="view-search">
+    <div class="view-hero">
+      <div class="hero-text">
+        <p class="label">FIND ANYTHING</p>
+        <h1 class="hero-title">Search <em>The Archive</em></h1>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-ico">◎</span>
+      <input type="text" id="searchInput" class="search-input" placeholder="Title, director, actor, genre, mood…" autocomplete="off">
+    </div>
+    <div class="movie-grid" id="searchGrid">
+      <div class="empty-state"><p class="empty-icon">◎</p><p>Start typing to search 50 curated films</p></div>
+    </div>
+  </section>
+
+  <!-- MOOD -->
+  <section class="view" id="view-mood">
+    <div class="view-hero">
+      <div class="hero-text">
+        <p class="label">HOW ARE YOU FEELING?</p>
+        <h1 class="hero-title">Mood <em>Cinema</em></h1>
+      </div>
+    </div>
+    <div id="moodPickerSection">
+      <div class="mood-grid">
+        <button class="mood-card" data-mood="Heartwarming"><span class="mood-ico">☀</span><span class="mood-lbl">Heartwarming</span><span class="mood-sub">Feel the warmth</span></button>
+        <button class="mood-card" data-mood="Thrilling"><span class="mood-ico">⚡</span><span class="mood-lbl">Thrilling</span><span class="mood-sub">Edge of your seat</span></button>
+        <button class="mood-card" data-mood="Mind-bending"><span class="mood-ico">◈</span><span class="mood-lbl">Mind-bending</span><span class="mood-sub">Question everything</span></button>
+        <button class="mood-card" data-mood="Romantic"><span class="mood-ico">◇</span><span class="mood-lbl">Romantic</span><span class="mood-sub">Love stories</span></button>
+        <button class="mood-card" data-mood="Dark"><span class="mood-ico">◑</span><span class="mood-lbl">Dark & Gritty</span><span class="mood-sub">Raw and real</span></button>
+        <button class="mood-card" data-mood="Emotional"><span class="mood-ico">◎</span><span class="mood-lbl">Emotional</span><span class="mood-sub">Feel deeply</span></button>
+        <button class="mood-card" data-mood="Quirky"><span class="mood-ico">◬</span><span class="mood-lbl">Quirky</span><span class="mood-sub">Offbeat & original</span></button>
+        <button class="mood-card" data-mood="Epic"><span class="mood-ico">◻</span><span class="mood-lbl">Epic</span><span class="mood-sub">Grand scale</span></button>
+        <button class="mood-card" data-mood="Inspiring"><span class="mood-ico">⬡</span><span class="mood-lbl">Inspiring</span><span class="mood-sub">Rise up</span></button>
+      </div>
+    </div>
+    <div id="moodResultsSection" style="display:none">
+      <div class="section-header">
+        <h2 class="section-title" id="moodTitle"></h2>
+        <button class="btn-ghost" id="clearMoodBtn">← Back</button>
+      </div>
+      <div class="movie-grid" id="moodGrid"></div>
+    </div>
+  </section>
+
+  <!-- DIRECTOR'S LENS -->
+  <section class="view" id="view-director">
+    <div class="view-hero">
+      <div class="hero-text">
+        <p class="label">UNIQUE FEATURE</p>
+        <h1 class="hero-title">Director's <em>Lens</em></h1>
+      </div>
+    </div>
+    <p class="view-desc">Explore a filmmaker's complete vision — then discover films with the same cinematic DNA.</p>
+    <div class="search-wrap" style="margin-bottom:28px">
+      <span class="search-ico">◈</span>
+      <input type="text" id="directorInput" class="search-input" placeholder="Search a director…" autocomplete="off">
+    </div>
+    <div id="directorGrid" class="director-grid"></div>
+    <div id="directorResults" style="display:none">
+      <div class="section-header">
+        <h2 class="section-title" id="directorTitle"></h2>
+        <button class="btn-ghost" id="clearDirBtn">← All Directors</button>
+      </div>
+      <div class="movie-grid" id="directorMovies"></div>
+      <div id="dnaSection" style="display:none">
+        <p class="sublabel">SAME CINEMATIC DNA</p>
+        <div class="movie-grid" id="dnaGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WATCHLIST -->
+  <section class="view" id="view-watchlist">
+    <div class="view-hero">
+      <div class="hero-text">
+        <p class="label">YOUR COLLECTION</p>
+        <h1 class="hero-title">Watchlist <em>& Ratings</em></h1>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="saved">Saved</button>
+      <button class="tab" data-tab="rated">Rated</button>
+      <button class="tab" data-tab="foryou">For You</button>
+    </div>
+    <div id="tab-saved" class="tab-pane">
+      <div class="movie-grid" id="watchlistGrid"><div class="empty-state"><p class="empty-icon">◻</p><p>No films saved yet.</p></div></div>
+    </div>
+    <div id="tab-rated" class="tab-pane hidden">
+      <div class="movie-grid" id="ratedGrid"><div class="empty-state"><p class="empty-icon">★</p><p>Rate some films first.</p></div></div>
+    </div>
+    <div id="tab-foryou" class="tab-pane hidden">
+      <div class="movie-grid" id="hybridGrid"><div class="empty-state"><p class="empty-icon">◬</p><p>Rate films to get personal recommendations.</p></div></div>
+    </div>
+  </section>
+
+  <!-- AI ADVISER -->
+  <section class="view" id="view-ai">
+    <div class="view-hero">
+      <div class="hero-text">
+        <p class="label">POWERED BY CLAUDE AI</p>
+        <h1 class="hero-title">Your Film <em>Adviser</em></h1>
+      </div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-chat" id="aiChat">
+        <div class="ai-msg bot">
+          <div class="ai-av">◈</div>
+          <div class="ai-bubble">
+            <p>Welcome! I'm your personal cinema adviser. Try asking:</p>
+            <div class="suggestions">
+              <span class="chip" onclick="suggest(this.textContent)">"Something like Parasite but more emotional"</span>
+              <span class="chip" onclick="suggest(this.textContent)">"Best Scorsese to start with?"</span>
+              <span class="chip" onclick="suggest(this.textContent)">"Mind-bending sci-fi from the 2000s"</span>
+              <span class="chip" onclick="suggest(this.textContent)">"Compare Nolan and Kubrick"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ai-input-row">
+        <input type="text" id="aiInput" class="ai-inp" placeholder="Ask your film adviser…">
+        <button class="ai-send" onclick="sendAI()">→</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modal">
+    <button class="modal-x" id="modalX">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div class="toast" id="toast"></div>
+
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
